@@ -19,13 +19,14 @@ public class MusicService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        // Đảm bảo bạn đã có file nhạc tên demo.mp3 trong thư mục res/raw
         mediaPlayer = MediaPlayer.create(this, R.raw.demo);
         mediaPlayer.setLooping(true);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (!mediaPlayer.isPlaying()) {
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
             mediaPlayer.start();
         }
         return START_STICKY;
@@ -37,14 +38,41 @@ public class MusicService extends Service {
     }
 
     public void pauseMusic() {
-        if (mediaPlayer.isPlaying()) mediaPlayer.pause();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
     }
 
     public void resumeMusic() {
-        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
     }
+
     public boolean isPlaying() {
         return mediaPlayer != null && mediaPlayer.isPlaying();
+    }
+
+    // --- Cần thêm các hàm này để sửa lỗi trong MainActivity ---
+
+    public int getDuration() {
+        if (mediaPlayer != null) {
+            return mediaPlayer.getDuration();
+        }
+        return 0;
+    }
+
+    public int getCurrentPosition() {
+        if (mediaPlayer != null) {
+            return mediaPlayer.getCurrentPosition();
+        }
+        return 0;
+    }
+
+    public void seekTo(int position) {
+        if (mediaPlayer != null) {
+            mediaPlayer.seekTo(position);
+        }
     }
 
     @Override

@@ -5,13 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.widget.SeekBar;
-import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import com.google.android.material.button.MaterialButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +18,18 @@ public class MainActivity extends AppCompatActivity {
     private boolean isBound = false;
     private MaterialButton btnPlayPause;
     private SeekBar seekBar;
+    private Handler handler = new Handler();
+
+    private Runnable updateSeekBar = new Runnable() {
+        @Override
+        public void run() {
+            if (isBound && musicService.isPlaying()) {
+                int currentPosition = musicService.getCurrentPosition();
+                seekBar.setProgress(currentPosition);
+            }
+            handler.postDelayed(this, 1000);
+        }
+    };
 
     private ServiceConnection connection = new ServiceConnection() {
         @Override
@@ -27,7 +37,10 @@ public class MainActivity extends AppCompatActivity {
             MusicService.MyBinder binder = (MusicService.MyBinder) service;
             musicService = binder.getService();
             isBound = true;
+
+            seekBar.setMax(musicService.getDuration());
             updatePlayPauseIcon();
+            handler.postDelayed(updateSeekBar, 1000);
         }
 
         @Override
@@ -61,12 +74,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnPrevious.setOnClickListener(v -> {
-            // Logic cho bài trước đó
-        });
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser && isBound) {
+                    musicService.seekTo(progress);
+                }
+            }
 
-        btnNext.setOnClickListener(v -> {
-            // Logic cho bài kế tiếp
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
     }
 
@@ -81,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        handler.removeCallbacks(updateSeekBar);
         if (isBound) {
             unbindService(connection);
             isBound = false;
