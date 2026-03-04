@@ -1,115 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_rich_gradient"
-    android:padding="24dp">
+    android:padding="20dp">
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@android:drawable/ic_menu_revert"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ĐANG PHÁT"
+            android:textColor="#88FFFFFF"
+            android:textSize="10sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Danh sách bài hát"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardAlbumArt"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        app:cardCornerRadius="150dp"
-        app:cardElevation="25dp"
-        android:layout_marginTop="60dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        app:cardCornerRadius="140dp"
+        app:cardElevation="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvSongTitle"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
+        app:layout_vertical_bias="0.2">
         <ImageView
             android:id="@+id/imgAlbumArt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@android:drawable/ic_menu_gallery"            android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars" />
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_gallery" />
     </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/tvSongTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Tên Bài Hát Demo"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textStyle="bold"
-        android:layout_marginTop="40dp"
-        app:layout_constraintTop_toBottomOf="@id/cardAlbumArt"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/tvArtistName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvArtistName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:text="Ca Sĩ Thể Hiện"
-        android:textColor="#B3FFFFFF"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tvSongTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textColor="#AAFFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCurrentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0:00"
+        android:textColor="#88FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        app:layout_constraintStart_toStartOf="@+id/seekBar" />
+
+    <TextView
+        android:id="@+id/tvTotalTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0:00"
+        android:textColor="#88FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        app:layout_constraintEnd_toEndOf="@+id/seekBar" />
 
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:progress="30"
-        android:max="100"
+        android:layout_marginBottom="40dp"
         android:progressTint="@color/purple_primary"
         android:thumbTint="@color/purple_primary"
-        app:layout_constraintTop_toBottomOf="@id/tvArtistName" />
+        app:layout_constraintBottom_toTopOf="@+id/btnPlayPause"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@id/seekBar"
-        app:layout_constraintBottom_toBottomOf="parent">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPrevious"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:cornerRadius="28dp"
+        app:icon="@drawable/ic_skip_previous_bold"
+        app:iconGravity="textStart"
+        app:iconSize="28dp"
+        android:padding="0dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:backgroundTint="@color/white_20"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPlayPause"
+        app:layout_constraintEnd_toStartOf="@+id/btnPlayPause"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnPlayPause" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPrevious"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            app:icon="@android:drawable/ic_media_previous"
-            app:iconSize="30dp"
-            app:iconGravity="textStart"
-            android:padding="0dp"
-            app:cornerRadius="30dp"
-            android:backgroundTint="#33FFFFFF"
-            app:iconTint="@color/white"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPlayPause"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="60dp"
+        app:cornerRadius="43dp"
+        app:elevation="8dp"
+        app:icon="@drawable/ic_play_arrow"
+        app:iconGravity="textStart"
+        app:iconSize="45dp"
+        android:padding="0dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:backgroundTint="@color/purple_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnNext"
+        app:layout_constraintStart_toEndOf="@+id/btnPrevious" />
 
-        <Space android:layout_width="30dp" android:layout_height="wrap_content" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPlayPause"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            app:icon="@android:drawable/ic_media_play"
-            app:iconSize="50dp"
-            app:iconGravity="textStart"
-            android:padding="0dp"
-            app:cornerRadius="45dp"
-            android:backgroundTint="@color/purple_primary"
-            app:elevation="10dp"/>
-
-        <Space android:layout_width="30dp" android:layout_height="wrap_content" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnNext"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            app:icon="@android:drawable/ic_media_next"
-            app:iconSize="30dp"
-            app:iconGravity="textStart"
-            android:padding="0dp"
-            app:cornerRadius="30dp"
-            android:backgroundTint="#33FFFFFF"
-            app:iconTint="@color/white"/>
-    </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnNext"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:cornerRadius="28dp"
+        app:icon="@drawable/ic_skip_next_bold"
+        app:iconGravity="textStart"
+        app:iconSize="28dp"
+        android:padding="0dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:backgroundTint="@color/white_20"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPlayPause"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnPlayPause"
+        app:layout_constraintTop_toTopOf="@+id/btnPlayPause" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

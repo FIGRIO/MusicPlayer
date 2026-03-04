@@ -3,6 +3,8 @@
     <color name="purple_light">#9C4DCC</color>
     <color name="purple_dark">#38006B</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="white_30">#4DFFFFFF</color>
     <color name="bg_gradient_start">#2E003E</color>
     <color name="bg_gradient_end">#000000</color>
 </resources>
